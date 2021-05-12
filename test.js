@@ -1,10 +1,10 @@
 import Scanner from "./scanner/Scanner.js";
 
 const scanner = new Scanner(`
-  <div>
+  a<div atributo="lal\\"ala">
     <teste>
       <maca>
-        <pirulito />
+        <uau />
         testando            lalala muito                 bacana isso aí                     
       </maca>
     </teste>

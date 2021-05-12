@@ -95,7 +95,7 @@ export default class Scanner {
 
     do {
       if (c === '\\') {
-        const next = this.peekNext();
+        const next = this.peek();
         if (next === '"') {
           lexeme += '"';
           this.advance();
