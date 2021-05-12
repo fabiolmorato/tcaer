@@ -7,23 +7,24 @@ element -> ("<" name (name "=" value)* ">" (element)* "<" "/" name ">" )
          | (text);
 
 value -> """ (character)* """;
-name -> (letter | "-" | "_") (character)*;
+name -> (letter) (letter | "-")*;
 text -> (character)*;
 
 */
 import Token, { types as tokenTypes } from "./Token.js";
 import Enum from "../utils/enum.js";
 
-const contextTypes = Enum.object(
+export const contextTypes = Enum.object(
   'TAG',
   'CHILDREN'
 );
 
 export default class Scanner {
-  constructor (code) {
+  constructor (code, initialContext = contextTypes.CHILDREN) {
     this.code = code;
     this.position = 0;
-    this.context = contextTypes.CHILDREN;
+    this.context = initialContext;
+    this.expected = tokenTypes.TEXT;
   }
 
   lex () {
@@ -50,10 +51,6 @@ export default class Scanner {
   peekNext () {
     if (this.code.length === this.position - 1) return null;
     return this.code[this.position + 1];
-  }
-
-  peekPrevious () {
-    if (this.position === 0) return null;
   }
 
   advance () {
@@ -90,10 +87,16 @@ export default class Scanner {
   }
 
   valueToken () {
+    this.expected = tokenTypes.VALUE;
+
     let lexeme = "";
     let c = this.advance();
 
     do {
+      if (this.end()) {
+        throw new Error('Expected closing double quotes')
+      };
+
       if (c === '\\') {
         const next = this.peek();
         if (next === '"') {
@@ -110,10 +113,12 @@ export default class Scanner {
     return new Token(tokenTypes.VALUE, lexeme);
   }
 
-  nameToken() {
+  nameToken () {
     const characters = "abcdefghijklmnopqrstuvwxyz-".split('');
     let lexeme = "";
     let c = this.advance();
+
+    if (c === '-') throw new Error('Names can\'t start with "-"')
 
     while (characters.indexOf(c) > -1) {
       lexeme += c;
@@ -125,13 +130,13 @@ export default class Scanner {
     return new Token(tokenTypes.NAME, lexeme);
   }
 
-  textToken() {
+  textToken () {
     const whitespaceCharacters = ' \n\t\r'.split('');
     let lexeme = "";
     let afterWhitespace = false;
     let c = this.advance();
 
-    while (c !== '<') {
+    while (c !== '<' && !this.end()) {
       if (afterWhitespace && whitespaceCharacters.indexOf(c) > -1) {
         if (whitespaceCharacters.indexOf(this.peekNext()) === -1) afterWhitespace = false;
       } else {

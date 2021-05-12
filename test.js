@@ -4,11 +4,11 @@ const scanner = new Scanner(`
   a<div atributo="lal\\"ala">
     <teste>
       <maca>
-        <uau />
+        <uau atributo="que nao termina o valor" />
         testando            lalala muito                 bacana isso aí                     
       </maca>
     </teste>
-  </div>
+  </div>asdasdasd
 `);
 
 console.log(scanner.lex());
