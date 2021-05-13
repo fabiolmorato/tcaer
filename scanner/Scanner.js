@@ -24,7 +24,6 @@ export default class Scanner {
     this.code = code;
     this.position = 0;
     this.context = initialContext;
-    this.expected = tokenTypes.TEXT;
   }
 
   lex () {
@@ -87,8 +86,6 @@ export default class Scanner {
   }
 
   valueToken () {
-    this.expected = tokenTypes.VALUE;
-
     let lexeme = "";
     let c = this.advance();
 
