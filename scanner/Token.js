@@ -8,7 +8,8 @@ export const types = Enum.object(
   'GREATER_THAN',
   'SLASH',
   'TEXT',
-  'EOF'
+  'EOF',
+  'JS_EXP'
 );
 
 export default class Token {
