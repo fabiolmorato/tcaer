@@ -1,11 +1,11 @@
 import { html } from "./tcaer/tcaer.js";
+import render from "./tcaer/render.js";
 
 function Component () {
   return html`
     <div class="component class-1 class-2">
-      <${Hello} name="World" id=${1} />
+      <${Hello} name="World" />
       Is it     working?
-      ${"hello!!!"}
     </div>
   `;
 }
@@ -16,10 +16,4 @@ function Hello ({ name }) {
   `;
 }
 
-console.log(
-  JSON.stringify(
-    Component(),
-    null,
-    4
-  )
-);
+render(Component(), document.querySelector("#root"));
