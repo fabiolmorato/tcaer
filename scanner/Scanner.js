@@ -1,16 +1,3 @@
-/*
-
-LANGUAGE IMPLEMENTED
-
-element -> ("<" name (name "=" value)* ">" (element)* "<" "/" name ">" )
-         | ("<" name (name "=" value)* "/" ">")
-         | (text);
-
-value -> """ (character)* """;
-name -> (letter) (letter | "-")*;
-text -> (character)*;
-
-*/
 import Token, { types as tokenTypes } from "./Token.js";
 import Enum from "../utils/enum.js";
 
