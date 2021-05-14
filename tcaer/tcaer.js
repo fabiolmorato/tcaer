@@ -1,8 +1,9 @@
 import tokenize from "./tokenize.js";
+import parse from "./parse.js";
 
 export function html (...args) {
   const tokens = tokenize(args);
-  // todo: parse tokens into ast
-  return tokens; // for testing purposes
-}
+  const root = parse(tokens);
 
+  return root; // for testing purposes
+}

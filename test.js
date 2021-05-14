@@ -3,8 +3,9 @@ import { html } from "./tcaer/tcaer.js";
 function Component () {
   return html`
     <div class="component class-1 class-2">
-      <${Hello} name="World" />
+      <${Hello} name="World" id=${1} />
       Is it     working?
+      ${"hello!!!"}
     </div>
   `;
 }
@@ -15,4 +16,10 @@ function Hello ({ name }) {
   `;
 }
 
-console.log(Component());
+console.log(
+  JSON.stringify(
+    Component(),
+    null,
+    4
+  )
+);
