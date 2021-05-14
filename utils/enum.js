@@ -11,6 +11,6 @@ Enum.number = function* () {
 
 Enum.object = function (...props) {
   const obj = {};
-  for (let prop of props) obj[prop] = Symbol(prop);
+  for (let prop of props) obj[prop] = prop;
   return obj;
 }
