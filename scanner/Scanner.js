@@ -128,31 +128,21 @@ export default class Scanner {
   }
 
   textToken () {
-    const whitespaceCharacters = ' \n\t\r'.split('');
     let lexeme = "";
-    let afterWhitespace = false;
     let c = this.advance();
 
     while (c !== '<' && !this.end()) {
-      if (afterWhitespace && whitespaceCharacters.indexOf(c) > -1) {
-        if (whitespaceCharacters.indexOf(this.peekNext()) === -1) afterWhitespace = false;
-      } else {
-        lexeme += c;
-        if (whitespaceCharacters.indexOf(c) > -1) afterWhitespace = true;
-        else afterWhitespace = false;
-      }
-
+      lexeme += c;
       c = this.advance();
     }
 
     this.position--;
 
-    lexeme = lexeme.split(" ").filter(p => p.length > 0).join(" ");
-
     return new Token(tokenTypes.TEXT, lexeme);
   }
 
   getNextToken () {
+    const initialPosition = this.position;
     this.skipWhitespace();
 
     if (this.end()) return new Token(tokenTypes.EOF);
@@ -162,6 +152,8 @@ export default class Scanner {
     if (c === '<') {
       this.context = contextTypes.TAG;
       return new Token(tokenTypes.LESS_THAN, '<');
+    } else if (this.context === contextTypes.CHILDREN) {
+      this.position = initialPosition + 1;
     }
 
     if (c === '=') return new Token(tokenTypes.EQUAL_SIGN, '=');
