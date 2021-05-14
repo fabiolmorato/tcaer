@@ -154,6 +154,7 @@ export default class Scanner {
 
       if (this.peek() === '/') {
         this.advance();
+        this.context = contextTypes.TAG;
         return new Token(tokenTypes.CLOSING_TAG, '</');
       }
 
@@ -163,7 +164,15 @@ export default class Scanner {
     }
 
     if (c === '=') return new Token(tokenTypes.EQUAL_SIGN, '=');
-    if (c === '/') return new Token(tokenTypes.SLASH, '/');
+    if (c === '/') {
+      if (this.peek() === '>') {
+        this.advance();
+        this.context = contextTypes.CHILDREN;
+        return new Token(tokenTypes.CLOSING_TAG, '/>');
+      }
+
+      return new Token(tokenTypes.SLASH, '/');
+    }
 
     if (c === '>') {
       this.context = contextTypes.CHILDREN;
