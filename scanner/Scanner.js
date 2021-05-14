@@ -111,7 +111,7 @@ export default class Scanner {
   }
 
   nameToken () {
-    const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-".split('');
+    const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-1234567890".split('');
     let lexeme = "";
     let c = this.advance();
 
