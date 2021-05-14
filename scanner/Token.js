@@ -2,6 +2,7 @@ import Enum from "../utils/enum.js";
 
 export const types = Enum.object(
   'LESS_THAN',
+  'CLOSING_TAG',
   'NAME',
   'EQUAL_SIGN',
   'VALUE',

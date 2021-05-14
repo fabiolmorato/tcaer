@@ -111,7 +111,7 @@ export default class Scanner {
   }
 
   nameToken () {
-    const characters = "abcdefghijklmnopqrstuvwxyz-".split('');
+    const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-".split('');
     let lexeme = "";
     let c = this.advance();
 
@@ -151,6 +151,12 @@ export default class Scanner {
 
     if (c === '<') {
       this.context = contextTypes.TAG;
+
+      if (this.peek() === '/') {
+        this.advance();
+        return new Token(tokenTypes.CLOSING_TAG, '</');
+      }
+
       return new Token(tokenTypes.LESS_THAN, '<');
     } else if (this.context === contextTypes.CHILDREN) {
       this.position = initialPosition + 1;
