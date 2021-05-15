@@ -7,13 +7,17 @@ function Component () {
       <${Hello} name="World" />
       Is it     working?
     </div>
+    <strong>Será que quebra?</strong>
   `;
 }
 
 function Hello ({ name }) {
   return html`
     <h1>Hello ${name}!</h1>
+    <h2>tcaer</h2>
   `;
 }
 
-render(Component(), document.querySelector("#root"));
+render(html`
+  <${Component} />
+`, document.querySelector("#root"));
