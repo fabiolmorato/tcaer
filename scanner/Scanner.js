@@ -123,6 +123,8 @@ export default class Scanner {
       c = this.advance();
     }
 
+    if (this.end()) lexeme += c;
+
     this.position--;
 
     return new Token(tokenTypes.TEXT, lexeme);
