@@ -1,5 +1,4 @@
-import { html } from "./tcaer/tcaer.js";
-import render from "./tcaer/render.js";
+import { html, render } from "./tcaer/tcaer.js";
 
 function Component () {
   return html`
